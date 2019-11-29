@@ -2,6 +2,7 @@ import React from 'react';
 
 import ContactListPage from './Container/ContactListpage';
 import ContactFormPage from './Container/ContactFormPage';
+
 import {Route,NavLink } from 'react-router-dom';
 import {Container} from 'semantic-ui-react';
 
@@ -15,7 +16,7 @@ class App extends React.Component {
         <NavLink className="item" activeClassName="active" exact to="/">
             Contact Lists
          </NavLink>  
-         <NavLink className='item' activeClassName='active' exact to='/newContact' >
+         <NavLink className='item' activeClassName='active' exact to='/contacts/new' >
             Add Contact
          </NavLink> 
          </div>

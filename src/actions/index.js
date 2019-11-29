@@ -8,7 +8,7 @@ export const client = axios.create({
   },
  
   proxy: {
-      host: '10.247.162.117',
+      host: 'localhost',
       port: 3000
     }
 })
