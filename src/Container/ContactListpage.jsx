@@ -1,20 +1,23 @@
 import React, { Component} from 'react';
 import ContactList from '../component/ContactList';
 import {connect} from 'react-redux';
-import { fetchContacts } from '../actions/Actions';
+import { fetchContacts,deleteContact } from '../actions/Actions';
 
 
 class ContactListPage extends Component {
 
 componentDidMount(){
-    this.props.fetchContacts();
+   return  this.props.fetchContacts()
+   .then ((response)=>console.log(response.data))
+   .catch((err)=>console.log(err));
 }
+
 
   render() {
     return (
       <div>
         <h1>List of Contacts</h1>
-        <ContactList contacts={this.props.contactState}/>
+        <ContactList contacts={this.props.contactState} deleteContact={this.props.deleteContact}/>
       </div>
     )
   }
@@ -27,4 +30,4 @@ function mapStateToProps(state) {
   }
 
 
-export default connect(mapStateToProps,{fetchContacts})(ContactListPage);
+export default connect(mapStateToProps,{fetchContacts,deleteContact})(ContactListPage);

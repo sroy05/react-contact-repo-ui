@@ -1,6 +1,6 @@
 import React, { Component} from 'react';
 import ContactForm from '../component/ContactForm';
-import {newContact,saveContact} from '../actions/Actions';
+import {newContact,saveContact,fetchContact,updateContact} from '../actions/Actions';
 import { SubmissionError } from 'redux-form';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
@@ -12,21 +12,38 @@ class ContactFormPage extends Component {
   }
 
   componentDidMount() {
+  
+    const _id = this.props.match.params;
+    if(_id)
+    this.props.fetchContact(_id)
+    else
     this.props.newContact();
   }
 
   submit = (contact) => {
-    console.log("contact data on conatctform:",contact);
-    return this.props.saveContact(contact).then(function(response) {
-        this.setState({ redirect:true }); 
-        console.log(response.data)
-      })
-      .catch(err => {
-         throw new SubmissionError(this.props.errors)
-       })
-  }
+    if(!contact.id){
+      const obj= this.props.saveContact(contact)
+
+      if(obj!==null){
+        this.setState({redirect:true})
+      } else{
+      new SubmissionError(this.props.errors)
+      }
+    }
+    else{
+      const obj= this.props.updateContact(contact)
+
+      if(obj!==null){
+        this.setState({redirect:true})
+      } else{
+      new SubmissionError(this.props.errors)
+      }
+    }
+    
+  } 
 
   render() {
+    console.log(this.state);
     return (
       <div>
         {
@@ -46,4 +63,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, {newContact, saveContact})(ContactFormPage);
+export default connect(mapStateToProps, {newContact, saveContact,fetchContact,updateContact})(ContactFormPage);
